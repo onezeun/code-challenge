@@ -1,10 +1,11 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle, css } from 'styled-components';
 import reset from 'styled-reset';
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
   *, *::before, *::after {
     box-sizing: border-box;
+    font-size: 62.5%;
   }
 
   @font-face {
@@ -13,6 +14,7 @@ const GlobalStyle = createGlobalStyle`
     font-weight: 400;
     font-style: normal;
   };
+
   @font-face {
     font-family: 'Disney';
     font-weight: 400;
@@ -20,8 +22,9 @@ const GlobalStyle = createGlobalStyle`
     src: url('/fonts/WaltDisney Font.ttf') format('truetype');
   }
 
-
   body {
+    background: ${({ theme }) => theme.gradientBackground};
+    color: ${({ theme }) => theme.textColor};
     font-family: "Pretendard-Regular", "Arial", sans-serif;
     line-height: 1.5;
   };

@@ -1,6 +1,5 @@
 import * as S from './Home.styles';
 import { useQuery } from 'react-query';
-import { Link } from 'react-router-dom';
 import { fetchCharacters } from 'api';
 import Loading from 'components/Loading';
 
@@ -18,18 +17,21 @@ const Home = () => {
   }
 
   return (
-    <div>
+    <S.HomeContainer>
       {data?.slice(0, 10).map((character: ICharacter) => (
-        <div key={character.id}>
-          <Link
+        <S.CharacterCard key={character.id}>
+          <S.CardLink
             to={`/character/${character.id}`}
             state={{ name: character.name, imgUrl: character.imageUrl }}
           >
-            {character.name} <img src={character.imageUrl} alt={character.name}></img>
-          </Link>
-        </div>
+            <S.ImageWrapper>
+              <S.CardImage src={character.imageUrl} alt={character.name} />
+            </S.ImageWrapper>
+            <S.CardName>{character.name}</S.CardName>
+          </S.CardLink>
+        </S.CharacterCard>
       ))}
-    </div>
+    </S.HomeContainer>
   );
 };
 

@@ -1,3 +1,4 @@
+import * as S from './Detail.styles';
 import { useQuery } from 'react-query';
 import { useLocation, useParams } from 'react-router-dom';
 import { fetchCharacterInfo } from 'api';
@@ -20,18 +21,20 @@ const Detail = () => {
     () => fetchCharacterInfo(characterId as string) // 바꿔야함
   );
 
-  if(isLoading) {
-    return <Loading />
-  };
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
-    <div>
-      <h1>{state.name}</h1>
-      <img src={state.imgUrl} alt={state.name} />
-      <ul>
-        {data?.films.map((film) => <li>{film}</li>)}
-      </ul>
-    </div>
+    <S.DetailContainer>
+      <S.DetailImageWrapper>
+        <S.DetailImage src={state.imgUrl} alt={state.name} />
+      </S.DetailImageWrapper>
+      <S.DetailName>{state.name}</S.DetailName>
+      <S.FilmList>
+        {data?.films.map((film, index) => <S.FilmItem key={index}>{film}</S.FilmItem>)}
+      </S.FilmList>
+    </S.DetailContainer>
   );
 };
 
