@@ -2,7 +2,8 @@ import * as S from './Detail.styles';
 import { useQuery } from 'react-query';
 import { useLocation, useParams } from 'react-router-dom';
 import { fetchCharacterInfo } from 'api';
-import Loading from 'components/Loading';
+import LoadingComponent from 'components/LoadingComponent';
+import ErrorComponent from 'components/ErrorComponent';
 
 interface ICharacterDetail {
   id: number;
@@ -16,25 +17,30 @@ const Detail = () => {
   const { characterId } = useParams();
   const { state } = useLocation();
 
-  const { isLoading, data } = useQuery<ICharacterDetail>(
+  const { isLoading, data, error } = useQuery<ICharacterDetail>(
     ['characterInfo', characterId],
     () => fetchCharacterInfo(characterId as string) // 바꿔야함
   );
 
   if (isLoading) {
-    return <Loading />;
+    return <LoadingComponent />;
+  }
+
+  if(error) {
+    return <ErrorComponent />;
   }
 
   return (
-    <S.DetailContainer>
-      <S.DetailImageWrapper>
-        <S.DetailImage src={state.imgUrl} alt={state.name} />
-      </S.DetailImageWrapper>
-      <S.DetailName>{state.name}</S.DetailName>
+    <S.Container>
+      <S.ImageWrapper>
+        <S.Image src={state.imgUrl} alt={state.name} />
+      </S.ImageWrapper>
+      <S.Name>{state.name}'s Films'</S.Name>
+      <S.SourceButton href={data?.sourceUrl}>Go to Source</S.SourceButton>
       <S.FilmList>
         {data?.films.map((film, index) => <S.FilmItem key={index}>{film}</S.FilmItem>)}
       </S.FilmList>
-    </S.DetailContainer>
+    </S.Container>
   );
 };
 

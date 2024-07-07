@@ -1,22 +1,27 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
-import { ThemeProvider } from 'styled-components';
+import { Outlet, useNavigate } from 'react-router-dom';
+import styled, { ThemeProvider } from 'styled-components';
 import GlobalStyle from 'GlobalStyle';
 import { lightTheme, darkTheme } from 'theme';
-import styled, { keyframes } from 'styled-components';
 
 const App = () => {
-  const [theme, setTheme] = useState('dark');
+  const [theme, setTheme] = useState('light');
+  const navigate = useNavigate();
 
   const themeToggler = () => {
     theme === 'light' ? setTheme('dark') : setTheme('light');
   };
+
+  const handleTitleClick = () => {
+    navigate('/');
+  };
+
   return (
     <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
       <GlobalStyle />
       <ToggleContainer onClick={themeToggler}>Switch Theme</ToggleContainer>
       <Container>
-        <Title>Disney Characters</Title>
+        <Title onClick={handleTitleClick}>Disney Characters</Title>
         <Outlet />
       </Container>
     </ThemeProvider>

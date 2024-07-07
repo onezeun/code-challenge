@@ -5,7 +5,9 @@ declare module 'styled-components' {
     textColor: string;
     bgColor: string;
     btnColor: string;
+    tagBgColor:string;
     gradientBackground: string;
     dropShadow: string;
+    boxShadow: string;
   }
 }

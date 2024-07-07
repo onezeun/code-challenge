@@ -1,7 +1,8 @@
 import * as S from './Home.styles';
 import { useQuery } from 'react-query';
 import { fetchCharacters } from 'api';
-import Loading from 'components/Loading';
+import LoadingComponent from 'components/LoadingComponent';
+import ErrorComponent from 'components/ErrorComponent';
 
 interface ICharacter {
   id: number;
@@ -10,28 +11,32 @@ interface ICharacter {
 }
 
 const Home = () => {
-  const { isLoading, data } = useQuery<ICharacter[]>('allCharacters', fetchCharacters);
+  const { isLoading, data, error } = useQuery<ICharacter[]>('allCharacters', fetchCharacters);
 
   if (isLoading) {
-    return <Loading />;
+    return <LoadingComponent />;
+  }
+
+  if (error) {
+    return <ErrorComponent />;
   }
 
   return (
-    <S.HomeContainer>
-      {data?.slice(0, 10).map((character: ICharacter) => (
+    <S.Container>
+      {data?.slice(0, 100).map((character: ICharacter) => (
         <S.CharacterCard key={character.id}>
           <S.CardLink
             to={`/character/${character.id}`}
             state={{ name: character.name, imgUrl: character.imageUrl }}
           >
             <S.ImageWrapper>
-              <S.CardImage src={character.imageUrl} alt={character.name} />
+              <S.Image src={character.imageUrl} alt={character.name} />
             </S.ImageWrapper>
             <S.CardName>{character.name}</S.CardName>
           </S.CardLink>
         </S.CharacterCard>
       ))}
-    </S.HomeContainer>
+    </S.Container>
   );
 };
 
