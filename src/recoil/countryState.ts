@@ -1,19 +1,18 @@
-// travelListsState.ts
 import { atom, selector } from 'recoil';
 
 export const wishToVisitState = atom<string[]>({
   key: 'wishToVisitState',
-  default: JSON.parse(localStorage.getItem('wishToVisit')!)
+  default: []
 });
 
 export const visitedState = atom<string[]>({
   key: 'visitedState',
-  default: JSON.parse(localStorage.getItem('visited')!)
+  default: []
 });
 
 export const favoriteState = atom<string[]>({
   key: 'favoriteState',
-  default: JSON.parse(localStorage.getItem('favorite')!)
+  default: []
 });
 
 export const persistState = selector<void>({
